@@ -13,3 +13,79 @@
 - Побачити єдність розрізнених праць Юнґа – від ранніх психіатричних досліджень до пізніх алхімічних студій.
 - Застосувати SUBIT як інструмент аналітичної роботи (аналіз снів, діагностика архетипних ситуацій, планування терапії).
 - Встановити міст між юнґіанською традицією та сучасними системними підходами (теорія інформації, когнітивна наука, цифрова гуманітаристика).
+
+# Структура репозиторію
+
+```
+subit-jung/
+│
+├── README.md                     # Опис проєкту, ліцензія, DOI (після виходу)
+│
+├── monograph/                    # Основний текст монографії
+│   ├── 00-frontmatter/
+│   │   ├── title.md              # Титульна сторінка
+│   │   ├── abstract.md           # Анотація (укр., англ.)
+│   │   └── table-of-contents.md  # Автоматично генерується, але можна зберегти для довідки
+│   │
+│   ├── 01-introduction/
+│   │   └── introduction.md       # Вступ: методологія SUBIT, мета роботи
+│   │
+│   ├── 02-life-and-context/
+│   │   ├── biography.md          # Життєпис у світлі SUBIT-координат
+│   │   ├── historical-context.md # Історичний контекст (Швейцарія, психіатрія)
+│   │   └── intellectual-sources.md # Джерела: Фрейд, Ніцше, І-Цзін, гностицизм
+│   │
+│   ├── 03-subit-framework/
+│   │   ├── theoretical-foundations.md  # Онтологія SUBIT: WHO, WHERE, WHEN
+│   │   ├── the-64-archetypes.md        # Атлас 64 архетипних ситуацій (скорочена версія)
+│   │   └── subit-and-jung.md           # Як SUBIT корелює з юнгівськими концептами
+│   │
+│   ├── 04-systematic-analysis/
+│   │   ├── early-writings.md           # ME × EAST × SPRING (1900–1915)
+│   │   ├── confrontation-unconscious.md# ME × WEST × AUTUMN (1913–1920)
+│   │   ├── typology-and-functions.md   # WHERE-аналіз (1921)
+│   │   ├── individuation.md            # WE, YOU, THEY в контексті
+│   │   └── late-works.md               # Alchemy, synchronicity (WEST–NORTH–EAST)
+│   │
+│   ├── 05-alchemical-studies/
+│   │   ├── introduction-alchemy.md     # Юнг і алхімія: огляд
+│   │   ├── tractatus-analysis.md       # Детальний розбір «Трактату про камінь»
+│   │   ├── 64-operations.md            # Зіставлення 64 операцій із SUBIT
+│   │   └── coniunctio-and-self.md      # Rubedo як інтеграція WHO-позицій
+│   │
+│   ├── 06-synchronicity-and-i-ching/
+│   │   ├── synchronicity-principle.md   # Синхронія як не-причинний зв’язок
+│   │   ├── i-ching-and-subit.md         # 64 гексаграми як SUBIT-матриця
+│   │   └── empirical-examples.md        # Приклади з життя Юнґа та клініки
+│   │
+│   ├── 07-clinical-implications/
+│   │   ├── diagnosis.md                 # SUBIT у діагностиці архетипних ситуацій
+│   │   ├── dreams.md                    # Аналіз снів через SUBIT-координати
+│   │   └── therapeutic-navigation.md    # Планування терапії як рух по матриці
+│   │
+│   ├── 08-conclusions/
+│   │   ├── summary.md                   # Основні результати
+│   │   ├── future-research.md           # Перспективи: емпірика, цифрові інструменти
+│   │   └── subit-as-system.md           # SUBIT як мета-теорія для аналітичної психології
+│   │
+│   ├── 09-backmatter/
+│   │   ├── glossary.md                  # Глосарій термінів (юнгіанських і SUBIT)
+│   │   ├── bibliography.md              # Бібліографія (формат CSL YAML або BibTeX)
+│   │   └── appendices.md                # Додатки (наприклад, повний атлас 64 архетипів)
+│   │
+│   └── monograph.md                     # Збірний файл (для зручності конвертації)
+│   
+├── tables/                              # Таблиці в CSV/Excel для відтворення
+│       ├── 64-archetypes.csv
+│       ├── 64-operations.csv
+│       └── chronology.csv
+│
+└── supplementary/                       # Додаткові матеріали
+    ├── lectures/                        # Лекції на основі монографії (опціонально)
+    ├── interactive/                     # Інтерактивний атлас (JavaScript/HTML)
+    │   ├── index.html
+    │   ├── atlas.js
+    │   └── style.css
+    └── datasets/                        # Дані досліджень (анонімізовані приклади)
+        └── dreams-subit-annotated.csv
+```
