@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SUBIT Атлас 64 архетипів</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+            background: #faf9f5;
+            color: #1e2a2f;
+            line-height: 1.5;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #d4c9b6;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #2c3e2f;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #5e6b5c;
+            margin-top: 0.5rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: #fffcf7;
+            padding: 0.75rem 1.25rem;
+            border-radius: 2rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border: 1px solid #ddd2bc;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            background: white;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #8b7a5b;
+            box-shadow: 0 0 0 2px rgba(139,122,91,0.2);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f0ede7;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #3a3e38;
+        }
+
+        .filter-btn.active {
+            background: #8b7a5b;
+            color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: #ddd2bc;
+        }
+
+        .stats {
+            font-size: 0.85rem;
+            background: #e9e4da;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            color: #4a4d44;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid #eee5d8;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            padding: 0.9rem 1rem 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 1px solid #f0e7dc;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            background: #fffcf7;
+        }
+
+        .archetype-name {
+            color: #2b3b2a;
+        }
+
+        .archetype-code {
+            font-family: monospace;
+            font-size: 0.7rem;
+            background: #f2efe8;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.5rem;
+            color: #5a604e;
+        }
+
+        .card-body {
+            padding: 0.8rem 1rem 1rem;
+            font-size: 0.85rem;
+            color: #3c463a;
+        }
+
+        .coords {
+            font-family: monospace;
+            background: #f8f4ed;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .desc-preview {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .phase-badge {
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            background: #e8e0d2;
+            color: #4e5a43;
+        }
+
+        /* modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 650px;
+            width: 90%;
+            max-height: 85vh;
+            border-radius: 1.5rem;
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #7f6e51;
+            line-height: 1;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            padding-right: 1.5rem;
+        }
+
+        .modal-sub {
+            font-family: monospace;
+            background: #f0ede5;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .modal-section {
+            margin-top: 1rem;
+        }
+
+        .modal-section h4 {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: #5f4e33;
+            border-left: 3px solid #c3b28b;
+            padding-left: 0.6rem;
+        }
+
+        .modal-section p {
+            margin-bottom: 0.6rem;
+            line-height: 1.45;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9b917e;
+            border-top: 1px solid #e2d9cd;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+            .card-header { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>📖 SUBIT · Атлас 64 архетипних ситуацій</h1>
+        <div class="subhead">Карта душі: WHO × WHERE × WHEN — 64 архетипи за Юнґом та системою SUBIT</div>
+    </header>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Пошук за назвою, описом, координатами...">
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn" data-filter="all">Усі</button>
+            <button class="filter-btn" data-filter="ME">ME (Его)</button>
+            <button class="filter-btn" data-filter="WE">WE (Колектив)</button>
+            <button class="filter-btn" data-filter="YOU">YOU (Аніма/Анімус)</button>
+            <button class="filter-btn" data-filter="THEY">THEY (Самість)</button>
+        </div>
+        <div class="stats" id="stats">64 архетипи</div>
+    </div>
+
+    <div id="archetypeGrid" class="grid"></div>
+    <footer>
+        SUBIT — система координат для аналітичної психології. Натисніть на картку для детального опису.
+    </footer>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+    // Дані з CSV (64 архетипи) на основі остаточної верифікованої версії
+    // Кожен об'єкт містить поля: number, who, where, when, code, name, description, jungian_concept, task
+    const archetypesData = [
+        {number:1, who:"ME", where:"EAST", when:"SPRING", code:"101010", name:"Пробудження героя", description:"Свідомість прокидається в ранковому світлі. Відчуття власної унікальності, покликання. Початок індивідуації, де его ще не стикалося з тінню.", jungian_concept:"Формування ego", task:"Відокремитися від колективних ідентичностей (WE) і наважитися на власний шлях."},
+        {number:2, who:"ME", where:"EAST", when:"SUMMER", code:"101011", name:"Герой на вершині", description:"Его досягає розквіту, соціальної реалізації. Може виникати гординя, ототожнення з Персоною.", jungian_concept:"Інфляція ego", task:"Зберегти зв’язок із несвідомим, не піддатися інфляції."},
+        {number:3, who:"ME", where:"EAST", when:"AUTUMN", code:"101001", name:"Сутінки героя", description:"Его починає помічати власні межі, витіснені аспекти повертаються. Відчуття втрати напрямку.", jungian_concept:"Криза героя", task:"Інтегрувати тінь, не впадаючи в депресію."},
+        {number:4, who:"ME", where:"EAST", when:"WINTER", code:"101000", name:"Спокійний свідок", description:"Его вже не ідентичне герою; воно стає спостерігачем внутрішніх процесів. Тиха мудрість.", jungian_concept:"Его, що співпрацює із Самістю", task:"Дозволити Самісті керувати, не втрачаючи свідомості."},
+        {number:5, who:"ME", where:"SOUTH", when:"SPRING", code:"101110", name:"Пристрасть, що народжується", description:"Потужний афект, сексуальна чи творча енергія, що шукає вираження. Его захоплене пристрастю.", jungian_concept:"Лібідо як творча сила", task:"Спрямувати енергію, не дати їй зруйнувати межі."},
+        {number:6, who:"ME", where:"SOUTH", when:"SUMMER", code:"101111", name:"Тріумф пристрасті", description:"Его реалізує свою волю в повній силі. Можливе надмірне ототожнення з пристрастю.", jungian_concept:"Героїчне діяння", task:"Не втратити зв’язок із душевною глибиною (анімою/анімусом)."},
+        {number:7, who:"ME", where:"SOUTH", when:"AUTUMN", code:"101101", name:"Вигорання", description:"Після піку настає втома, розчарування. Его стикається з власною обмеженістю.", jungian_concept:"Тінь пристрасті", task:"Пережити депресивну фазу як необхідний спуск у несвідоме."},
+        {number:8, who:"ME", where:"SOUTH", when:"WINTER", code:"101100", name:"Тихий вогонь", description:"Пристрасть стає внутрішнім теплом, що не потребує зовнішнього вияву. Его зберігає енергію.", jungian_concept:"Інтегрована пристрасть", task:"Зберігати внутрішній вогонь у період зовнішнього спокою."},
+        {number:9, who:"ME", where:"WEST", when:"SPRING", code:"100110", name:"Поклик тіні", description:"Его відчуває неспокій, раптові емоції, що суперечать самоідентифікації. Перші симптоми.", jungian_concept:"Тінь починає виходити на поверхню", task:"Не витісняти, а дослідити те, що з’являється."},
+        {number:10, who:"ME", where:"WEST", when:"SUMMER", code:"100111", name:"Зустріч із тінню", description:"Его стикається з тим, що заперечувало. Може виникнути криза ідентичності.", jungian_concept:"Конфронтація ego з витісненим", task:"Визнати тінь частиною себе, інтегрувати її без ототожнення."},
+        {number:11, who:"ME", where:"WEST", when:"AUTUMN", code:"100101", name:"Збір плодів тіні", description:"Его приймає свої темні аспекти, вони стають джерелом сили.", jungian_concept:"Тінь інтегрується", task:"Використати інтегровану тінь для творчості."},
+        {number:12, who:"ME", where:"WEST", when:"WINTER", code:"100100", name:"Мудрість тіні", description:"Его не протистоїть тіні, а співпрацює з нею. Глибока автентичність.", jungian_concept:"Тінь перетворюється на внутрішнього провідника", task:"Передати досвід іншим (перехід до YOU або THEY)."},
+        {number:13, who:"ME", where:"NORTH", when:"SPRING", code:"100010", name:"Тягар до центру", description:"Его відчуває, що є щось більше, ніж воно. Сакральний трепет.", jungian_concept:"Перше передчуття Самості", task:"Не ототожнювати це відчуття з власною величчю."},
+        {number:14, who:"ME", where:"NORTH", when:"SUMMER", code:"100011", name:"Его на службі Самості", description:"Его спрямовує свої зусилля на реалізацію внутрішнього покликання. Гармонія.", jungian_concept:"Індивідуація на підйомі", task:"Не втратити зв’язок із тінню (WEST) і пристрастю (SOUTH)."},
+        {number:15, who:"ME", where:"NORTH", when:"AUTUMN", code:"100001", name:"Символічна смерть его", description:"Его відпускає контроль, довіряючи Самісті. Криза ідентичності, що веде до духовного переродження.", jungian_concept:"Его відпускає контроль", task:"Пережити «ніч душі» як необхідний етап."},
+        {number:16, who:"ME", where:"NORTH", when:"WINTER", code:"100000", name:"Самість у центрі", description:"Его більше не є господарем; воно – слухняний інструмент цілісності.", jungian_concept:"Его стало провідником Самості", task:"Бути присутнім у світі, не ототожнюючись із жодною з позицій."},
+        {number:17, who:"WE", where:"EAST", when:"SPRING", code:"111010", name:"Народження спільноти", description:"Група формує спільну ідентичність, ритуали, міфи. Індивід знаходить захист.", jungian_concept:"Participatio mystica", task:"Не втратити індивідуальність у процесі злиття."},
+        {number:18, who:"WE", where:"EAST", when:"SUMMER", code:"111011", name:"Розквіт колективного героя", description:"Спільнота досягає мети, тріумфує. Може виникати інфляція «ми».", jungian_concept:"Національний чи соціальний підйом", task:"Зберігати критичне мислення, не демонізувати інших (THEY)."},
+        {number:19, who:"WE", where:"EAST", when:"AUTUMN", code:"111001", name:"Розчарування в ідеалі", description:"Спільнота стикається з власною тінню (злочини, помилки).", jungian_concept:"Криза колективної ідентичності", task:"Інтегрувати колективну тінь, не впадаючи в провину."},
+        {number:20, who:"WE", where:"EAST", when:"WINTER", code:"111000", name:"Тиха спільнота", description:"Група існує без примусу, підтримуючи кожного на його шляху.", jungian_concept:"Зріла спільнота", task:"Зберігати спільноту як простір для індивідуації."},
+        {number:21, who:"WE", where:"SOUTH", when:"SPRING", code:"111110", name:"Колективна пристрасть", description:"Спільний афект, свято, революційна енергія.", jungian_concept:"Архетип натовпу", task:"Не дати пристрасті перерости в насильство."},
+        {number:22, who:"WE", where:"SOUTH", when:"SUMMER", code:"111111", name:"Тріумф натовпу", description:"Спільнота відчуває всемогутність. Небезпека тоталітаризму.", jungian_concept:"Колективна інфляція", task:"Зберегти індивідуальну свідомість усередині маси."},
+        {number:23, who:"WE", where:"SOUTH", when:"AUTUMN", code:"111101", name:"Наслідки пристрасті", description:"Група стикається з руйнуваннями, яких завдала.", jungian_concept:"Колективна тінь виходить назовні", task:"Прийняти відповідальність, не шукати цапа-відбувайла."},
+        {number:24, who:"WE", where:"SOUTH", when:"WINTER", code:"111100", name:"Погашений вогонь", description:"Пристрасть трансформувалася в традицію, обряд.", jungian_concept:"Спільнота в стані спокою", task:"Оновити ритуали, щоб вони не стали мертвою формою."},
+        {number:25, who:"WE", where:"WEST", when:"SPRING", code:"110110", name:"Колективна тінь пробуджується", description:"Група починає усвідомлювати свої витіснені аспекти. Викриття, люстрація, покаяння.", jungian_concept:"Група починає усвідомлювати тінь", task:"Не впасти в самонищення, але й не заперечувати."},
+        {number:26, who:"WE", where:"WEST", when:"SUMMER", code:"110111", name:"Зіткнення з колективною тінню", description:"Конфронтація із злочинами минулого. Гостра криза ідентичності, розпад старих міфів.", jungian_concept:"Конфронтація з колективною тінню", task:"Інтегрувати тінь на рівні спільноти, створити новий міф."},
+        {number:27, who:"WE", where:"WEST", when:"AUTUMN", code:"110101", name:"Примирення з минулим", description:"Спільнота приймає свою темну історію як частину себе.", jungian_concept:"Колективна інтеграція", task:"Відпустити провину, зберігаючи пам’ять."},
+        {number:28, who:"WE", where:"WEST", when:"WINTER", code:"110100", name:"Мудрість спільноти", description:"Група стає хранителем досвіду, не повторюючи помилок.", jungian_concept:"Зріле колективне несвідоме", task:"Передавати мудрість наступним поколінням."},
+        {number:29, who:"WE", where:"NORTH", when:"SPRING", code:"110010", name:"Духовний початок спільноти", description:"Група формується навколо спільного сенсу, цінностей.", jungian_concept:"Релігійна чи філософська спільнота", task:"Уникати сектантської винятковості."},
+        {number:30, who:"WE", where:"NORTH", when:"SUMMER", code:"110011", name:"Розквіт духовної спільноти", description:"Інституція, що транслює архетипні істини.", jungian_concept:"Церква, орден, школа", task:"Не замінювати живу душу догмою."},
+        {number:31, who:"WE", where:"NORTH", when:"AUTUMN", code:"110001", name:"Криза віри", description:"Спільнота втрачає зв’язок із джерелом, стає формальною.", jungian_concept:"Занепад інституцій", task:"Повернутися до архетипних коренів, оновити символи."},
+        {number:32, who:"WE", where:"NORTH", when:"WINTER", code:"110000", name:"Спільнота самітників", description:"Група існує в спокої, підтримуючи внутрішню роботу кожного.", jungian_concept:"Монастир, еко-селище", task:"Бути прикладом цілісності для ширшого світу."},
+        {number:33, who:"YOU", where:"EAST", when:"SPRING", code:"011010", name:"Зустріч із душею", description:"Проєкція на іншого, закоханість, творче натхнення.", jungian_concept:"Аніма/анімус з’являються", task:"Не ототожнювати іншого з душевним образом."},
+        {number:34, who:"YOU", where:"EAST", when:"SUMMER", code:"011011", name:"Союз із душею", description:"Відносини, де проєкція частково знята, діалог можливий.", jungian_concept:"Свідоме відношення з анімою/анімусом", task:"Інтегрувати якості аніми/анімуса у власну психіку."},
+        {number:35, who:"YOU", where:"EAST", when:"AUTUMN", code:"011001", name:"Розчарування в іншому", description:"Виявляється, що інший не відповідає внутрішньому образу.", jungian_concept:"Криза проєкції", task:"Повернути проєкцію, побачити іншого реально."},
+        {number:36, who:"YOU", where:"EAST", when:"WINTER", code:"011000", name:"Внутрішній діалог", description:"Людина веде діалог із душею без зовнішніх проєкцій.", jungian_concept:"Аніма/анімус інтегровані", task:"Підтримувати живий контакт із внутрішньою протилежністю."},
+        {number:37, who:"YOU", where:"SOUTH", when:"SPRING", code:"011110", name:"Пристрасть до іншого", description:"Сильне потягнення, злиття, втрата меж.", jungian_concept:"Еротична проєкція", task:"Не втратити себе в іншому."},
+        {number:38, who:"YOU", where:"SOUTH", when:"SUMMER", code:"011111", name:"Полум’яний союз", description:"Зустріч протилежностей у повноті. Може бути як реальний шлюб, так і внутрішнє єднання.", jungian_concept:"Coniunctio – символічний шлюб", task:"Утримувати єдність, не зливаючись."},
+        {number:39, who:"YOU", where:"SOUTH", when:"AUTUMN", code:"011101", name:"Попіл пристрасті", description:"Конфлікти, зрада, охолодження.", jungian_concept:"Вигорання відносин", task:"Пережити втрату, не впадаючи в цинізм."},
+        {number:40, who:"YOU", where:"SOUTH", when:"WINTER", code:"011100", name:"Тепло пам’яті", description:"Пристрасть перетворилася на глибоку вдячність і спокій.", jungian_concept:"Інтегрована любов", task:"Зберігати любов як внутрішню силу."},
+        {number:41, who:"YOU", where:"WEST", when:"SPRING", code:"010110", name:"Тінь іншого", description:"У іншому бачимо те, що не приймаємо в собі. Конфлікти.", jungian_concept:"Проєкція власної тіні на партнера", task:"Повернути проєкцію, визнати тінь у собі."},
+        {number:42, who:"YOU", where:"WEST", when:"SUMMER", code:"010111", name:"Конфронтація з тінню у відносинах", description:"Партнери стикаються з найгіршим один в одному, що відображає їхню власну темряву.", jungian_concept:"Відносини як простір інтеграції тіні", task:"Не звинувачувати, а досліджувати разом."},
+        {number:43, who:"YOU", where:"WEST", when:"AUTUMN", code:"010101", name:"Прийняття тіні іншого", description:"Партнери бачать один одного реально, без ідеалізації.", jungian_concept:"Зрілі відносини", task:"Підтримувати зростання одне одного."},
+        {number:44, who:"YOU", where:"WEST", when:"WINTER", code:"010100", name:"Таємниця іншого", description:"Глибока близькість, яка не прагне володіти.", jungian_concept:"Відносини, що поважають непізнаване", task:"Дозволити іншому бути окремою таємницею."},
+        {number:45, who:"YOU", where:"NORTH", when:"SPRING", code:"010010", name:"Духовний наставник", description:"Людина бачить в іншому носія мудрості, цілісності.", jungian_concept:"Проєкція Самості на іншого", task:"Не залишатися в проєкції, знайти Самість у собі."},
+        {number:46, who:"YOU", where:"NORTH", when:"SUMMER", code:"010011", name:"Спільний пошук істини", description:"Партнери разом досліджують глибини, підтримують індивідуацію один одного.", jungian_concept:"Відносини, засновані на спільному духовному шляху", task:"Зберігати автономію, не створюючи залежності."},
+        {number:47, who:"YOU", where:"NORTH", when:"AUTUMN", code:"010001", name:"Криза ідеалів", description:"Виявляється, що наставник чи партнер не є втіленням Самості.", jungian_concept:"Розчарування в духовному авторитеті", task:"Пробачити, відпустити, взяти відповідальність за свій шлях."},
+        {number:48, who:"YOU", where:"NORTH", when:"WINTER", code:"010000", name:"Внутрішній шлюб", description:"Зовнішній інший більше не потрібен для цілісності; людина перебуває в союзі зі своєю Самістю.", jungian_concept:"Coniunctio oppositorum усередині", task:"Бути присутнім для інших, не втрачаючи центру."},
+        {number:49, who:"THEY", where:"EAST", when:"SPRING", code:"001010", name:"Архетип з’являється", description:"Людина відчуває присутність чогось більшого, ніж вона.", jungian_concept:"Поява архетипного образу в снах чи культурі", task:"Не ототожнюватися з архетипом, зберігати его."},
+        {number:50, who:"THEY", where:"EAST", when:"SUMMER", code:"001011", name:"Міф, що оживає", description:"Людина живе відповідно до глибокого міфу, відчуває призначення.", jungian_concept:"Активований архетип направляє життя", task:"Не стати одержимим архетипом, зберігати рефлексію."},
+        {number:51, who:"THEY", where:"EAST", when:"AUTUMN", code:"001001", name:"Смерть старого міфу", description:"Втрата сенсу, депресія, нігілізм.", jungian_concept:"Архетип відступає", task:"Витримати порожнечу, очікуючи нового символу."},
+        {number:52, who:"THEY", where:"EAST", when:"WINTER", code:"001000", name:"Народження нового символу", description:"У темряві з’являється світло, нове бачення.", jungian_concept:"Саморегуляція психіки", task:"Довіритися несвідомому, зафіксувати символ."},
+        {number:53, who:"THEY", where:"SOUTH", when:"SPRING", code:"001110", name:"Колективна пристрасть як архетип", description:"Людина відчуває себе частиною стихії, що перевершує її.", jungian_concept:"Архетип війни, революції, еросу", task:"Не ототожнюватися з руйнівною силою."},
+        {number:54, who:"THEY", where:"SOUTH", when:"SUMMER", code:"001111", name:"Танок стихій", description:"Екстаз, творчість, але й ризик одержимості.", jungian_concept:"Повне вираження архетипної пристрасті", task:"Спрямувати енергію в символічну форму."},
+        {number:55, who:"THEY", where:"SOUTH", when:"AUTUMN", code:"001101", name:"Наслідки архетипного вогню", description:"Після великої пристрасті – спустошення, що вимагає інтеграції.", jungian_concept:"Архетип залишає попіл", task:"Зібрати те, що залишилося, як скарб."},
+        {number:56, who:"THEY", where:"SOUTH", when:"WINTER", code:"001100", name:"Священний вогонь у спокої", description:"Людина зберігає внутрішній вогонь, не спалюючи нічого назовні.", jungian_concept:"Архетип пристрасті, інтегрований у тишу", task:"Бути джерелом тепла для інших."},
+        {number:57, who:"THEY", where:"WEST", when:"SPRING", code:"000110", name:"Тінь колективного несвідомого", description:"Людина стикається з колективною тінню – насильством, жорстокістю у снах чи зовні.", jungian_concept:"Архетип зла, демонічне", task:"Не витісняти, але й не ототожнюватися."},
+        {number:58, who:"THEY", where:"WEST", when:"SUMMER", code:"000111", name:"Одержимість тінню", description:"Людина підпадає під вплив руйнівних архетипів (нацизм, культи).", jungian_concept:"Архетипна одержимість", task:"Знайти світло всередині темряви, відновити ego."},
+        {number:59, who:"THEY", where:"WEST", when:"AUTUMN", code:"000101", name:"Інтеграція колективної тіні", description:"Людина визнає існування зла в собі й у світі, не ототожнюючись із ним.", jungian_concept:"Прийняття темряви як частини цілого", task:"Перетворити тінь на мудрість."},
+        {number:60, who:"THEY", where:"WEST", when:"WINTER", code:"000100", name:"Мудрість пітьми", description:"Людина черпає силу з глибин, які раніше лякали.", jungian_concept:"Тінь стає провідником до Самості", task:"Допомагати іншим у їхній темряві."},
+        {number:61, who:"THEY", where:"NORTH", when:"SPRING", code:"000010", name:"Зародок Самості", description:"Людина відчуває, що є щось, що об’єднує всі протилежності.", jungian_concept:"Самість як внутрішній центр починає усвідомлюватися", task:"Досліджувати символи цілісності (мандала, коло)."},
+        {number:62, who:"THEY", where:"NORTH", when:"SUMMER", code:"000011", name:"Життя як мандала", description:"Гармонія, відчуття сенсу, синхронії.", jungian_concept:"Самість активно керує життям", task:"Залишатися відкритим до змін, не закостеніти."},
+        {number:63, who:"THEY", where:"NORTH", when:"AUTUMN", code:"000001", name:"Смерть у Самісті", description:"Людина приймає власну кінцевість як частину цілого.", jungian_concept:"Останнє відпускання ego", task:"Передати досвід, завершити незавершене."},
+        {number:64, who:"THEY", where:"NORTH", when:"WINTER", code:"000000", name:"Повернення до джерела", description:"Стан, що перевершує індивідуальне життя.", jungian_concept:"Самість як вічний центр", task:"Бути присутнім як чисте буття."}
+    ];
+
+    // допоміжна функція для визначення фази (алхімічної) на основі коду
+    function getPhaseFromCode(code) {
+        if (!code) return "";
+        const whoBits = code.substring(0,2);
+        const whereBits = code.substring(2,4);
+        const whenBits = code.substring(4,6);
+        // визначаємо домінантну фазу за суб'єктом (але можна за комбінацією)
+        if (whoBits === "10" && whereBits === "10" && whenBits === "10") return "CITRINITAS";
+        if (whoBits === "11" && whereBits === "11" && whenBits === "11") return "RUBEDO";
+        if (whoBits === "01" && whereBits === "01" && whenBits === "01") return "NIGREDO";
+        if (whoBits === "00" && whereBits === "00" && whenBits === "00") return "ALBEDO";
+        // загальний випадок: кольорова гама за першою координатою (спрощено)
+        if (whoBits === "10") return "CITRINITAS (ME)";
+        if (whoBits === "11") return "RUBEDO (WE)";
+        if (whoBits === "01") return "NIGREDO (YOU)";
+        return "ALBEDO (THEY)";
+    }
+
+    // рендер сітки
+    let currentFilter = "all";
+    let searchTerm = "";
+
+    function renderGrid() {
+        const grid = document.getElementById('archetypeGrid');
+        const filtered = archetypesData.filter(arch => {
+            const matchesFilter = currentFilter === "all" || arch.who === currentFilter;
+            const matchesSearch = searchTerm === "" || 
+                arch.name.toLowerCase().includes(searchTerm) ||
+                arch.description.toLowerCase().includes(searchTerm) ||
+                arch.jungian_concept.toLowerCase().includes(searchTerm) ||
+                arch.code.includes(searchTerm) ||
+                `${arch.who} × ${arch.where} × ${arch.when}`.toLowerCase().includes(searchTerm);
+            return matchesFilter && matchesSearch;
+        });
+        
+        document.getElementById('stats').innerText = `${filtered.length} архетипів`;
+        
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:2rem;">Нічого не знайдено. Спробуйте інший запит.</div>`;
+            return;
+        }
+        
+        grid.innerHTML = filtered.map(arch => {
+            const coordStr = `${arch.who} × ${arch.where} × ${arch.when}`;
+            const phaseLabel = getPhaseFromCode(arch.code);
+            return `
+                <div class="card" data-id="${arch.number}">
+                    <div class="card-header">
+                        <span class="archetype-name">${arch.number}. ${arch.name}</span>
+                        <span class="archetype-code">${arch.code}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="coords">${coordStr}</div>
+                        <div class="desc-preview">${arch.description.substring(0, 100)}${arch.description.length>100?'…':''}</div>
+                        <div class="phase-badge">${phaseLabel}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        // додаємо обробники кліків
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = parseInt(card.dataset.id);
+                const archetype = archetypesData.find(a => a.number === id);
+                if (archetype) showModal(archetype);
+            });
+        });
+    }
+    
+    function showModal(arch) {
+        const modal = document.getElementById('modal');
+        const modalBody = document.getElementById('modalBody');
+        const coordFull = `${arch.who} × ${arch.where} × ${arch.when}`;
+        const phaseFull = getPhaseFromCode(arch.code);
+        modalBody.innerHTML = `
+            <span class="modal-close">&times;</span>
+            <div class="modal-title">${arch.number}. ${arch.name}</div>
+            <div class="modal-sub">${coordFull} &nbsp;|&nbsp; ${arch.code} &nbsp;|&nbsp; ${phaseFull}</div>
+            <div class="modal-section">
+                <h4>📖 Опис</h4>
+                <p>${arch.description}</p>
+            </div>
+            <div class="modal-section">
+                <h4>🧠 Юнгівський концепт</h4>
+                <p>${arch.jungian_concept}</p>
+            </div>
+            <div class="modal-section">
+                <h4>🎯 Завдання індивідуації</h4>
+                <p>${arch.task}</p>
+            </div>
+        `;
+        modal.classList.add('active');
+        const closeSpan = modalBody.querySelector('.modal-close');
+        closeSpan.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+    }
+    
+    // події
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        searchTerm = e.target.value.toLowerCase();
+        renderGrid();
+    });
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            renderGrid();
+        });
+    });
+    
+    renderGrid();
+</script>
+</body>
+</html>
