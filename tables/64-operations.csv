@@ -1,0 +1,65 @@
+number,latin_name,ukrainian_name,subit_coordinates,phase,description
+1,Calcinatio,Випалювання,ME × SOUTH × AUTUMN,Nigredo,Очищення вогнем; его згорає в пристрасті.
+2,Sublimatio,Сублімація,ME × EAST × AUTUMN,Nigredo,Підняття духу; его піднімається над пристрастю.
+3,Solutio,Розчинення,WE × WEST × AUTUMN,Nigredo,Колективні структупи розпадаються.
+4,Separatio,Розділення,WE × WEST × AUTUMN,Nigredo,Відокремлення індивіда від колективної тіні.
+5,Putrefactio,Гниття,ME × WEST × AUTUMN,Nigredo,Розклад старого ego; зустріч із тінню.
+6,Congelatio,Заморожування,ME × WEST × AUTUMN,Nigredo,Его застигає перед обличчям несвідомого.
+7,Cibatio,Годування,WE × SOUTH × AUTUMN,Nigredo,Колективна пристрасть живиться власними ілюзіями.
+8,Exaltatio,Возвеличення,WE × SOUTH × AUTUMN,Nigredo,Спільнота підносить свого героя.
+9,Multiplicatio,Розмноження,YOU × WEST × AUTUMN,Nigredo,Аніма/анімус множать образи в несвідомому.
+10,Fixatio,Фіксація,ME × WEST × WINTER,Nigredo,Стабілізація після зустрічі з тінню.
+11,Projectio,Проєкція,ME × SOUTH × AUTUMN,Nigredo,Его проєктує свою тінь на зовнішній світ.
+12,Destillatio,Дистиляція,YOU × WEST × AUTUMN,Nigredo,Очищення душевних образів від проєкцій.
+13,Ascensio,Підйом,YOU × WEST × AUTUMN,Nigredo,Душа піднімається з глибин.
+14,Descensio,Спуск,ME × WEST × AUTUMN,Nigredo,Его свідомо занурюється в глибини.
+15,Commixtio,Змішування,YOU × WEST × AUTUMN,Nigredo,Зустріч ego й аніми в темряві.
+16,Coagulatio,Згущення,ME × WEST × WINTER,Nigredo,Его набуває нової щільності після розчинення.
+17,Ablutio,Обмивання,YOU × NORTH × WINTER,Albedo,Аніма очищує душу в мовчанні.
+18,Dealbatio,Вибілювання,YOU × NORTH × WINTER,Albedo,Душа набуває білого кольору.
+19,Lotio,Промивання,YOU × NORTH × WINTER,Albedo,Повторне очищення, зняття проєкцій.
+20,Trituratio,Розтирання,YOU × NORTH × WINTER,Albedo,Подрібнення старих форм.
+21,Extractio,Витягування,YOU × NORTH × WINTER,Albedo,Виокремлення сутності душі.
+22,Rectificatio,Випрямлення,YOU × NORTH × WINTER,Albedo,Виправлення однобічності.
+23,Inceratio,Вощення,YOU × NORTH × WINTER,Albedo,Надання пластичності новій формі.
+24,Albificatio,Збіління,YOU × NORTH × WINTER,Albedo,Завершення albedo; душа як провідник.
+25,Mundificatio,Очищення,YOU × EAST × SPRING,Albedo,Ранкове очищення, новий початок.
+26,Subtilizatio,Утончення,YOU × EAST × SPRING,Albedo,Душа стає тонкою, проникливою.
+27,Fermentatio,Бродіння,YOU × EAST × SPRING,Albedo,Внутрішнє життя оживає.
+28,Conjunctionis,З’єднання,YOU × EAST × SPRING,Albedo,Початкове єднання свідомості й несвідомого.
+29,Fixatio alba,Біла фіксація,ME × NORTH × WINTER,Albedo,Его стабілізується після очищення.
+30,Praeparatio,Підготовка,ME × NORTH × WINTER,Albedo,Підготовка до наступної фази.
+31,Adustio,Спалювання,ME × WEST × WINTER,Albedo,Остаточне спалення залишків тіні.
+32,Albedo perfecta,Досконала білизна,ME × WEST × WINTER,Albedo,Завершення білої фази.
+33,Citrinitas prima,Перше пожовтіння,THEY × EAST × SPRING,Citrinitas,Світанок нового світла, архетипне сяйво.
+34,Solutio citrina,Жовте розчинення,THEY × EAST × SPRING,Citrinitas,Розчинення старих структур у світлі.
+35,Sublimatio citrina,Жовта сублімація,THEY × EAST × SPRING,Citrinitas,Підняття до сонячного світла.
+36,Inflammatio,Запалення,THEY × EAST × SPRING,Citrinitas,Займання внутрішнього вогню.
+37,Exsiccatio,Висушування,THEY × EAST × SPRING,Citrinitas,Видалення зайвої вологи (емоцій).
+38,Maturare,Дозрівання,THEY × EAST × SPRING,Citrinitas,Дозрівання каменю в світлі.
+39,Tinctura citrina,Жовта настойка,THEY × SOUTH × SUMMER,Citrinitas,Здатність фарбувати, трансформувати.
+40,Corrosio,Роз’їдання,THEY × SOUTH × SUMMER,Citrinitas,Руйнування останніх перешкод.
+41,Divisio,Розділення,THEY × SOUTH × SUMMER,Citrinitas,Розділення світла й темряви на новому рівні.
+42,Putrefactio citrina,Жовте гниття,THEY × WEST × AUTUMN,Citrinitas,Останнє розчинення перед rubedo.
+43,Congelatio citrina,Жовте згущення,THEY × WEST × AUTUMN,Citrinitas,Згущення світла в форму.
+44,Cibatio citrina,Жовте годування,WE × NORTH × SPRING,Citrinitas,Спільнота живиться новим світлом.
+45,Multiplicatio citrina,Жовте розмноження,WE × NORTH × SPRING,Citrinitas,Поширення світла в колективі.
+46,Fixatio citrina,Жовта фіксація,WE × NORTH × SPRING,Citrinitas,Стабілізація нового знання.
+47,Projectio citrina,Жовта проєкція,ME × SOUTH × SUMMER,Citrinitas,Его передає світло іншим.
+48,Ascensio citrina,Жовтий підйом,ME × SOUTH × SUMMER,Citrinitas,Остаточний підйом до сонця.
+49,Rubedo prima,Перше почервоніння,THEY × SOUTH × SUMMER,Rubedo,Поява червоного кольору, rubedo.
+50,Sanguificatio,Окровлення,THEY × SOUTH × SUMMER,Rubedo,Камінь набуває кров’яного кольору.
+51,Incineration,Спалення до золи,THEY × SOUTH × SUMMER,Rubedo,Остання жертва.
+52,Regeneratio,Відродження,THEY × SOUTH × SUMMER,Rubedo,Народження каменю.
+53,Maceratio,Розм’якшення,THEY × SOUTH × SUMMER,Rubedo,Камінь стає пластичним.
+54,Liquefactio,Розплавлення,THEY × SOUTH × SUMMER,Rubedo,Перехід у рідкий стан.
+55,Fixatio rubra,Червона фіксація,THEY × SOUTH × SUMMER,Rubedo,Остаточне закріплення.
+56,Tinctura rubra,Червона настойка,THEY × SOUTH × SUMMER,Rubedo,Здатність трансмутувати метали (психіку).
+57,Multiplicatio rubra,Червоне розмноження,THEY × SOUTH × SUMMER,Rubedo,Безмежне примноження сили.
+58,Projectio rubra,Червона проєкція,THEY × SOUTH × SUMMER,Rubedo,Завершальна трансмутація.
+59,Fermentatio rubra,Червоне бродіння,THEY × NORTH × WINTER,Rubedo,Життєва сила каменю.
+60,Conjunctio rubra,Червоне з’єднання,THEY × NORTH × WINTER,Rubedo,Остаточний coniunctio.
+61,Exaltatio rubra,Червоне возвеличення,THEY × NORTH × WINTER,Rubedo,Прославлення каменю.
+62,Sublimatio rubra,Червона сублімація,THEY × NORTH × WINTER,Rubedo,Підняття до найвищого.
+63,Deificatio,Обожнення,THEY × EAST × WINTER,Rubedo,Перетворення на lapis philosophorum.
+64,Perfectio,Досконалість,THEY × EAST × WINTER,Rubedo,Завершення Великого Діяння.
