@@ -15,4 +15,9 @@ WHEN ∈ {SPRING, SUMMER, AUTUMN, WINTER};
 |CITRINITAS| = |ME| = |EAST| = |SPRING| = |10|;
 |RUBEDO| = |WE| = |SOUTH| = |SUMMER| = |11|;
 |NIGREDO| = |YOU| = |WEST| = |AUTUMN| = |01|;
-|ALBEDO| = |THEY| = |NORTH| = |WINTER| = |00|
+|ALBEDO| = |THEY| = |NORTH| = |WINTER| = |00|;
+
+SUBIT = {b1, b2, b3, b4, b5, b6};
+WHO = {b1, b2};
+WHERE = {b3, b4};
+WHEN = {b5, b6}
